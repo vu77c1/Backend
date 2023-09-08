@@ -1,10 +1,9 @@
-﻿using System;
-namespace MSQL.Models
+namespace MSQL.Models.CategoryModel
 {
-	public class CategoryModel
-	{
+    public class CategoryRequestAdd
+    {
         public string CategoryName { get; set; }
         public string Description { get; set; }
+
     }
 }
-

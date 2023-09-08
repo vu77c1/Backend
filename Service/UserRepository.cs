@@ -22,14 +22,11 @@ namespace MSQL.Service
         public static int PAGE_SIZE { get; set; } = 5;
         private readonly MsqlContext _context;
         private readonly JwtService _service;
-        // private readonly IResponseCookies _responseCookies;
         public UserRepository(MsqlContext context, JwtService service, IOptions<AppSettings> appSettings)
         {
             _context = context;
             _service = service;
             _appSettings = appSettings.Value;
-            //  _responseCookies = responseCookies;
-
         }
         public object GetAll(int page, string sortBy, string search)
         {

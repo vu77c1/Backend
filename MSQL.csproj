@@ -43,10 +43,9 @@
     <None Remove="Common\Rsp\" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Data\" />
-    <Folder Include="Controllers\" />
     <Folder Include="Common\" />
     <Folder Include="Common\Req\" />
     <Folder Include="Common\Rsp\" />
+    <Folder Include="Models/SupplierModel/" />
   </ItemGroup>
 </Project>

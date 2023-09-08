@@ -1,13 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
-using MSQL.Common.Rsp;
-using MSQL.Models;
+using MSQL.Models.CategoryModel;
 using MSQL.Service;
 
-// For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace MSQL.Controllers
 {
@@ -21,65 +15,35 @@ namespace MSQL.Controllers
             this._categoryRepository = categoryRepository;
         }
         [HttpGet]
-        public IActionResult GetAll()
+        public ActionResult Get()
         {
-            try
-            {
-                return Ok(_categoryRepository.GetAll());
-
-            }
-            catch
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-
-            }
+            return Ok(_categoryRepository.GetAll());
         }
         [HttpPost]
-        public IActionResult Add(CategoryModel c)
+        public CategoryRespone Add(CategoryRequestAdd request)
         {
-            try
-            {
-               var data= _categoryRepository.Add(c);
-                return Ok(data);
-            }
-            catch
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
+            return _categoryRepository.Add(request);
 
-            }
         }
         [HttpPut]
-        public IActionResult Update(CategoryViewModel c)
+        public void Update(CategoryRequestEdit categoryRequestEdit)
         {
+            _categoryRepository.Update(categoryRequestEdit);
+        }
+        [HttpDelete]
+        [Route("{id}")]
+        public void Delete(int id)
+        {
+            _categoryRepository.Delete(id);
+        }
+        [HttpGet]
+        [Route("{id}")]
+        public CategoryRespone GetById(int id)
+        {
+            return _categoryRepository.GetById(id);
 
-            try
-            {
-                _categoryRepository.Update(c);
-                return Ok();
-            }
-            catch
-            {
-                return StatusCode(StatusCodes.Status500InternalServerError);
-
-            }
 
         }
-        [HttpDelete("{id}")]
-        public JsonResult Delete([FromBody]int id)
-        {
-            try
-            {
-                _categoryRepository.Delete(id);
-                return new JsonResult ("delete successfully");
-                
-            }
-            catch
-            {
-                return new JsonResult(StatusCodes.Status500InternalServerError);
 
-            }
-
-        }
     }
 }
-

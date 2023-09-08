@@ -1,14 +1,13 @@
-﻿using System;
-using MSQL.Models;
+using MSQL.Data;
+using MSQL.Models.CategoryModel;
 
-namespace MSQL.Service
+namespace MSQL.Service;
+public interface ICategoryRepository
 {
-	public interface ICategoryRepository
-	{
-        List<CategoryModel> GetAll();
-        CategoryViewModel Add(CategoryModel c);
-        void Update(CategoryViewModel c);
-        void Delete(int id);
-    }
-}
+    List<Category> GetAll();
+    CategoryRespone Add(CategoryRequestAdd request);
+    void Update(CategoryRequestEdit request);
+    void Delete(int id);
+    public CategoryRespone GetById(int id);
 
+}

@@ -1,11 +1,10 @@
-﻿using System;
-namespace MSQL.Models
+namespace MSQL.Models.CategoryModel
 {
-	public class CategoryViewModel
-	{
+    public class CategoryRequestEdit
+    {
         public int CategoryId { get; set; }
         public string CategoryName { get; set; }
         public string Description { get; set; }
+
     }
 }
-

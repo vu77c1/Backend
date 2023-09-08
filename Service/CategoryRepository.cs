@@ -1,63 +1,100 @@
-﻿using System;
 using MSQL.Data;
-using MSQL.Models;
+using MSQL.Models.CategoryModel;
 
-namespace MSQL.Service
+namespace MSQL.Service;
+public class CategoryRepository : ICategoryRepository
 {
-	public class CategoryRepository: ICategoryRepository
+    private readonly MsqlContext _context;
+    public CategoryRepository(MsqlContext context)
     {
-        private readonly MsqlContext _context;
-        public CategoryRepository(MsqlContext context)
-		{
-            _context = context;
-		}
+        _context = context;
 
-        public CategoryViewModel Add(CategoryModel c)
+    }
+    public CategoryRespone Add(CategoryRequestAdd request)
+    {
+        var data = new Category()
         {
-            var _c = new Category()
-            {
-                CategoryName=c.CategoryName,
-                Description=c.Description
+            CategoryName = request.CategoryName,
+            Description = request.Description,
 
-            };
-            _context.Add(_c);
+
+        };
+        try
+        {
+            _context.Add(data);
             _context.SaveChanges();
-            return new CategoryViewModel()
-            {
-                CategoryId=_c.CategoryId,
-                CategoryName=_c.CategoryName,
-                Description=_c.Description
+            return new CategoryRespone(data);
+        }
+        catch (System.Exception)
+        {
 
-            };
+            throw;
+        }
+    }
+
+    public void Delete(int id)
+    {
+        try
+        {
+            var sb = _context.Categories.FirstOrDefault(x => x.CategoryId == id);
+
+            var i = _context.Remove(sb);
+            _context.SaveChanges();
+
+        }
+        catch (System.Exception)
+        {
+
+            throw;
+        }
+    }
+
+    public List<Category> GetAll()
+    {
+        try
+        {
+            return _context.Categories.ToList();
+
         }
 
-        public List<CategoryModel> GetAll()
-        {
-            var rs = _context.Categories.Select(c => new CategoryModel()
-            {
-                CategoryName=c.CategoryName,
-                Description=c.Description
 
-            });
-            return rs.ToList();
-        }
-        public void Update( CategoryViewModel c)
+        catch (System.Exception)
         {
-            var _c = _context.Categories.SingleOrDefault(p => p.CategoryId == c.CategoryId);
-            _c.CategoryName = c.CategoryName;
-            _c.Description = c.Description;
+
+            throw;
+        }
+
+    }
+
+    public CategoryRespone GetById(int id)
+    {
+        try
+        {
+            var sb = _context.Categories.FirstOrDefault(x => x.CategoryId == id);
+            return new CategoryRespone(sb);
+        }
+        catch (System.Exception)
+        {
+
+            throw;
+        }
+
+    }
+
+    public void Update(CategoryRequestEdit request)
+    {
+        try
+        {
+            var rs = _context.Categories.FirstOrDefault(x => x.CategoryId == request.CategoryId);
+            rs.CategoryName = request.CategoryName;
+            rs.Description = request.Description;
+            _context.Update(rs);
             _context.SaveChanges();
         }
-        public void Delete(int id)
+        catch (System.Exception)
         {
-             var _c = _context.Categories.SingleOrDefault(p => p.CategoryId ==id);
-            if (_c!=null)
-            {
-                _context.Remove(_c);
-                _context.SaveChanges();
-            }
 
+            throw;
         }
     }
 }
-
