@@ -16,7 +16,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IUserRepository, UserRepository>();
 builder.Services.AddScoped<ISupplierRepository, SupplierRepository>();
+builder.Services.AddScoped<IBookRepository, BookRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
+builder.Services.AddScoped<IBookImportRepository, BookImportRepository>();
 builder.Services.AddScoped<JwtService>();
 builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddCors(options =>

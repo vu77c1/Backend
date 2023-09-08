@@ -13,6 +13,7 @@ namespace MSQL.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Book> Books { get; set; }
+        public DbSet<BookImport> BooksImport { get; set; }
     }
 }
 
